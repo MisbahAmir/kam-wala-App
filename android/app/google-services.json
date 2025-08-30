@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "318072354583",
+    "project_id": "kam-wala-app",
+    "storage_bucket": "kam-wala-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318072354583:android:21218d34fe4fe4b6836952",
+        "android_client_info": {
+          "package_name": "com.example.kam_wala_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBB6u1Qa7QZlcV5RLoUvzwwp9jZUVUcmSM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
