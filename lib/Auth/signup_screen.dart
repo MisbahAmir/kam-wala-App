@@ -16,7 +16,7 @@ class _SignupScreen1State extends State<SignupScreen1> {
   final _passwordController = TextEditingController();
 
   String _selectedRole = "user"; // default role
-  final List<String> _roles = ["admin", "worker", "user"];
+  final List<String> _roles = ["worker", "user"];
 
   final AuthService _authService = AuthService();
 

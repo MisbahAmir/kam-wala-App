@@ -108,7 +108,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Kam Wala App',
       debugShowCheckedModeBanner: false,
-      home: AdminHomePage(),
+      home: SplashScreen(),
 
       /// ✅ EasyLoading init yahan attach karna zaroori hai
       builder: EasyLoading.init(),
