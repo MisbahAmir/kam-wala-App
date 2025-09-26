@@ -17,7 +17,7 @@ class _SubCategoryLongScreenState extends State<SubCategoryLongScreen> {
   final int _selectedIndex = 1;
 
   final List<String> serviceImages = [
-    'assets/pic/WORKERS.jpg',
+    'assets/pic/male-plumber.jpg',
 
     'assets/pic/technichian.jpg',
     'assets/pic/Services Banner.png',
@@ -41,8 +41,8 @@ class _SubCategoryLongScreenState extends State<SubCategoryLongScreen> {
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Column(
               children: [
-                _buildBannerSearch(),
-                const SizedBox(height: 50),
+                // _buildBannerSearch(),
+                // const SizedBox(height: 50),
                 _buildCarousel(),
                 const SizedBox(height: 30),
                 _buildHeading(),
@@ -61,172 +61,6 @@ class _SubCategoryLongScreenState extends State<SubCategoryLongScreen> {
 
       // 🔥 Modern Curved Bottom Navigation Bar
       // bottomNavigationBar: _buildCurvedNavBar(),
-    );
-  }
-
-  Widget _buildBannerSearch() {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          height: 180, // Slightly taller for better proportion
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            image: const DecorationImage(
-              image: AssetImage("assets/pic/male-plumber.jpg"),
-              fit: BoxFit.cover,
-              alignment: Alignment.center,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.blue.shade200.withOpacity(0.4),
-                blurRadius: 25,
-                spreadRadius: 2,
-                offset: const Offset(0, 8),
-              ),
-            ],
-            gradient: LinearGradient(
-              // Soft gradient overlay for premium look
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.black.withOpacity(0.15),
-                Colors.transparent,
-                Colors.black.withOpacity(0.15),
-              ],
-            ),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(25),
-            child: Stack(
-              children: [
-                // Subtle overlay for text clarity if needed in future
-                Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.black.withOpacity(0.05),
-                        Colors.black.withOpacity(0.2),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                  ),
-                ),
-                // Optional floating tag or title
-                Positioned(
-                  bottom: 15,
-                  left: 15,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.85),
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 6,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: Text(
-                      "Special Offers",
-                      style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.blue.shade700,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-
-        // Positioned(
-        //   bottom: -25,
-        //   left: 40,
-        //   right: 40,
-        //   child: Material(
-        //     elevation: 12, // deeper shadow
-        //     shadowColor: Colors.tealAccent.withOpacity(0.4),
-        //     borderRadius: BorderRadius.circular(40),
-        //     child: ClipRRect(
-        //       borderRadius: BorderRadius.circular(40),
-        //       child: BackdropFilter(
-        //         filter: ImageFilter.blur(
-        //           sigmaX: 15,
-        //           sigmaY: 15,
-        //         ), // blur background
-        //         child: Container(
-        //           decoration: BoxDecoration(
-        //             gradient: LinearGradient(
-        //               colors: [
-        //                 Colors.white.withOpacity(0.85),
-        //                 Colors.white.withOpacity(0.6),
-        //               ],
-        //               begin: Alignment.topLeft,
-        //               end: Alignment.bottomRight,
-        //             ),
-        //             borderRadius: BorderRadius.circular(40),
-        //             border: Border.all(
-        //               color: Colors.teal.withOpacity(0.3), // glow border
-        //               width: 1.5,
-        //             ),
-        //           ),
-        //           child: TextField(
-        //             style: GoogleFonts.poppins(
-        //               fontSize: 15,
-        //               color: Colors.blueGrey.shade900,
-        //               fontWeight: FontWeight.w500,
-        //             ),
-        //             decoration: InputDecoration(
-        //               hintText: "Search services...",
-        //               hintStyle: GoogleFonts.poppins(
-        //                 color: Colors.grey.shade500,
-        //                 fontSize: 15,
-        //               ),
-        //               prefixIcon: AnimatedContainer(
-        //                 duration: const Duration(milliseconds: 200),
-        //                 margin: const EdgeInsets.only(left: 12, right: 8),
-        //                 decoration: BoxDecoration(
-        //                   gradient: LinearGradient(
-        //                     colors: [
-        //                       Colors.teal.withOpacity(0.15),
-        //                       Colors.tealAccent.withOpacity(0.1),
-        //                     ],
-        //                     begin: Alignment.topLeft,
-        //                     end: Alignment.bottomRight,
-        //                   ),
-        //                   shape: BoxShape.circle,
-        //                 ),
-        //                 child: const Icon(
-        //                   Icons.search_rounded,
-        //                   color: Colors.teal,
-        //                   size: 24,
-        //                 ),
-        //               ),
-        //               border: InputBorder.none,
-        //               filled: true,
-        //               fillColor: Colors.transparent, // glass effect
-        //               contentPadding: const EdgeInsets.symmetric(
-        //                 horizontal: 20,
-        //                 vertical: 14,
-        //               ),
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
-      ],
     );
   }
 
@@ -706,7 +540,12 @@ class _SubCategoryLongScreenState extends State<SubCategoryLongScreen> {
               elevation: 4,
             ),
             onPressed: () {
-              // TODO: Add navigation or action
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FatchAllimage()),
+                );
+              }
             },
             icon: const Icon(Icons.arrow_forward_rounded),
             label: Text(

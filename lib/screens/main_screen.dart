@@ -1,14 +1,28 @@
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // ✅ Import Firebase Auth
 
 import 'package:kam_wala_app/user/user_panel.dart';
+import 'package:kam_wala_app/Auth/login_screen.dart'; // ✅ Login screen after logout
 
 class HomeServiceScreen extends StatelessWidget {
   const HomeServiceScreen({super.key});
 
+  // ✅ Logout function
+  void _logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut(); // Sign out user
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginScreen1()),
+      (route) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size; // ✅ Screen dimensions
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -20,24 +34,27 @@ class HomeServiceScreen extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            // 🔔 Notification Icon
+            // 🔔 Notification + Logout Menu Icon
             Positioned(
-              top: size.height * 0.06, // ✅ Responsive spacing
+              top: size.height * 0.06,
               right: size.width * 0.05,
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => UserPanel()),
-                  );
-                },
-                child: Row(
-                  children: [
-                    Stack(
+              child: Row(
+                children: [
+                  // 🔔 Notification
+                  InkWell(
+                    onTap: () {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const UserPanel(),
+                      //   ),
+                      // );
+                    },
+                    child: Stack(
                       clipBehavior: Clip.none,
                       children: [
                         Container(
-                          padding: EdgeInsets.all(size.width * 0.001),
+                          padding: EdgeInsets.all(size.width * 0.01),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             shape: BoxShape.circle,
@@ -51,7 +68,7 @@ class HomeServiceScreen extends StatelessWidget {
                             ],
                           ),
                           child: Icon(
-                            Icons.notifications_none_rounded,
+                            Icons.logout,
                             color: Colors.black87,
                             size: size.width * 0.08,
                           ),
@@ -79,28 +96,66 @@ class HomeServiceScreen extends StatelessWidget {
                               '3',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 5,
-                                fontWeight: FontWeight.w100,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(width: size.width * 0.015),
-                    Text(
-                      'Notifications',
-                      style: GoogleFonts.poppins(
-                        fontSize: size.width * 0.05,
-                        fontWeight: FontWeight.w400,
+                  ),
+
+                  SizedBox(width: size.width * 0.04),
+
+                  // ⚙️ Modern Popup Menu (Logout option)
+                  PopupMenuButton<String>(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    icon: Container(
+                      padding: EdgeInsets.all(size.width * 0.015),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.25),
+                            blurRadius: 6,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        Icons.more_vert,
+                        color: Colors.black87,
+                        size: size.width * 0.07,
                       ),
                     ),
-                  ],
-                ),
+                    onSelected: (value) {
+                      if (value == 'logout') {
+                        _logout(context);
+                      }
+                    },
+                    itemBuilder:
+                        (context) => [
+                          const PopupMenuItem(
+                            value: 'logout',
+                            child: Row(
+                              children: [
+                                Icon(Icons.logout, color: Colors.redAccent),
+                                SizedBox(width: 8),
+                                Text("Logout"),
+                              ],
+                            ),
+                          ),
+                        ],
+                  ),
+                ],
               ),
             ),
 
-            // Center Content
+            // 🌟 Center Content
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -108,7 +163,6 @@ class HomeServiceScreen extends StatelessWidget {
                   Stack(
                     alignment: Alignment.center,
                     children: [
-                      // Background Circle
                       Container(
                         width: size.width * 0.85,
                         height: size.width * 0.85,
@@ -141,8 +195,6 @@ class HomeServiceScreen extends StatelessWidget {
                           ).withOpacity(0.4),
                         ),
                       ),
-
-                      // Image
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(size.width * 0.5),
@@ -175,7 +227,7 @@ class HomeServiceScreen extends StatelessWidget {
 
                   SizedBox(height: size.height * 0.04),
 
-                  // Text Section
+                  // 🌟 Text Section
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: size.width * 0.08,
@@ -200,8 +252,8 @@ class HomeServiceScreen extends StatelessWidget {
                             fontWeight: FontWeight.w800,
                             letterSpacing: 1.5,
                             color: Colors.blueGrey.shade900,
-                            shadows: [
-                              const Shadow(
+                            shadows: const [
+                              Shadow(
                                 blurRadius: 4.0,
                                 color: Colors.black26,
                                 offset: Offset(2, 2),
@@ -228,7 +280,7 @@ class HomeServiceScreen extends StatelessWidget {
               ),
             ),
 
-            // Bottom Button
+            // ⬇️ Bottom Button (same as before)
             Positioned(
               bottom: size.height * 0.04,
               left: 0,
@@ -238,7 +290,9 @@ class HomeServiceScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => UserPanel()),
+                      MaterialPageRoute(
+                        builder: (context) => const UserPanel(),
+                      ),
                     );
                   },
                   child: AnimatedContainer(

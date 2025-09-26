@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -52,7 +50,10 @@ class _UserPanelState extends State<UserPanel> {
 
   void _logout() {
     FirebaseAuth.instance.signOut();
-    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LoginScreen1()),
+    );
   }
 
   Widget _buildMobileView() {

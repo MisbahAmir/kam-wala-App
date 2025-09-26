@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:kam_wala_app/screens/onboundring.dart';
@@ -543,58 +542,57 @@ class _SplashScreenState extends State<SplashScreen>
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
 
-                FadeTransition(
-                  opacity: _textFadeAnimation,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 14,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.18),
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.4),
-                            width: 1.5,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.white.withOpacity(0.12),
-                              blurRadius: 18,
-                              offset: const Offset(0, 8),
-                            ),
-                          ],
-                        ),
-                        child: Text(
-                          'Professional plumbing services at your doorstep',
-                          style: TextStyle(
-                            color: blackColor.withOpacity(0.85),
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 1.3,
-                            shadows: [
-                              Shadow(
-                                blurRadius: 5,
-                                color: Colors.white.withOpacity(0.5),
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                //const SizedBox(height: 30),
 
-                const SizedBox(height: 35),
-
+                // FadeTransition(
+                //   opacity: _textFadeAnimation,
+                //   child: ClipRRect(
+                //     borderRadius: BorderRadius.circular(16),
+                //     child: BackdropFilter(
+                //       filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                //       child: Container(
+                //         padding: const EdgeInsets.symmetric(
+                //           horizontal: 24,
+                //           vertical: 14,
+                //         ),
+                //         decoration: BoxDecoration(
+                //           color: Colors.white.withOpacity(0.18),
+                //           borderRadius: BorderRadius.circular(16),
+                //           border: Border.all(
+                //             color: Colors.white.withOpacity(0.4),
+                //             width: 1.5,
+                //           ),
+                //           boxShadow: [
+                //             BoxShadow(
+                //               color: Colors.white.withOpacity(0.12),
+                //               blurRadius: 18,
+                //               offset: const Offset(0, 8),
+                //             ),
+                //           ],
+                //         ),
+                //         child: Text(
+                //           'Professional plumbing services at your doorstep',
+                //           style: TextStyle(
+                //             color: blackColor.withOpacity(0.85),
+                //             fontSize: 20,
+                //             fontWeight: FontWeight.w600,
+                //             letterSpacing: 1.3,
+                //             shadows: [
+                //               Shadow(
+                //                 blurRadius: 5,
+                //                 color: Colors.white.withOpacity(0.5),
+                //                 offset: const Offset(0, 2),
+                //               ),
+                //             ],
+                //           ),
+                //           textAlign: TextAlign.center,
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                //const SizedBox(height: 35),
                 TweenAnimationBuilder<double>(
                   tween: Tween<double>(begin: 0.7, end: 1.2),
                   duration: const Duration(milliseconds: 1200),

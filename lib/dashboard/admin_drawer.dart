@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kam_wala_app/After_Scan_View_files/worker_service_requests_tab.dart';
 import 'package:kam_wala_app/Auth/login_screen.dart';
-
+import 'package:kam_wala_app/Service_Request/adminsumary.dart';
+import 'package:kam_wala_app/Service_Request/product_list.dart';
+import 'package:kam_wala_app/Service_Request/worker_requests_page.dart';
 import 'package:kam_wala_app/beauty%20salon/AdminBookingRequestsPage.dart';
 import 'package:kam_wala_app/beauty%20salon/addpost.dart';
 import 'package:kam_wala_app/beauty%20salon/editdeletesalonservice.dart';
@@ -20,7 +23,6 @@ import 'package:kam_wala_app/feedback/adminrecored.dart';
 import 'package:kam_wala_app/feedback/userfeedbackscreen.dart';
 import 'package:kam_wala_app/feedback/workerfeedbackscreen.dart';
 import 'package:kam_wala_app/image%20crud%20hamdeling/AdminServiceDetailScreen.dart';
-
 import 'package:kam_wala_app/image%20crud%20hamdeling/Worker%20Dashboard.dart';
 import 'package:kam_wala_app/image%20crud%20hamdeling/Worker%20Detail%20recored%20Screen.dart';
 import 'package:kam_wala_app/image%20crud%20hamdeling/imagedatafatech.dart';
@@ -28,13 +30,19 @@ import 'package:kam_wala_app/image%20crud%20hamdeling/order_details_page.dart';
 import 'package:kam_wala_app/image%20crud%20hamdeling/product_edit_delete.dart';
 import 'package:kam_wala_app/image%20crud%20hamdeling/worker_job_request_screen.dart';
 import 'package:kam_wala_app/image%20crud%20hamdeling/worker_service_requests.dart';
-
 import 'package:kam_wala_app/screens/sub_category.dart';
+import 'package:kam_wala_app/user/bussinesadminrecoredscreen.dart';
 import 'package:kam_wala_app/user/user_panel.dart';
 import 'package:kam_wala_app/wallet/Wallet%20Screen.dart';
 import 'package:kam_wala_app/wallet/Worker_wallet.dart';
 import 'package:kam_wala_app/worker/WorkerPanel.dart';
 import 'package:kam_wala_app/worker/worker_registration.dart';
+
+final user = FirebaseAuth.instance.currentUser;
+final currentUserId = user?.uid ?? "";
+
+final worker = FirebaseAuth.instance.currentUser;
+final workerId = worker?.uid ?? "";
 
 class Admindrawer extends StatefulWidget {
   const Admindrawer({super.key});
@@ -61,10 +69,21 @@ class _AdmindrawerState extends State<Admindrawer> {
     }
   }
 
+  // Fetch worker details
+  Future<Map<String, String>> getWorkerDetails(String uid) async {
+    final doc =
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
+    if (!doc.exists) return {"workerName": "Unknown", "workerPhone": ""};
+    final data = doc.data()!;
+    return {
+      "workerName": data['name'] ?? "Unknown",
+      "workerPhone": data['phone'] ?? "",
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
-    final double drawerWidth =
-        MediaQuery.of(context).size.width * 0.75; // 75% width
+    final double drawerWidth = MediaQuery.of(context).size.width * 0.75;
 
     return Align(
       alignment: Alignment.centerLeft,
@@ -81,10 +100,7 @@ class _AdmindrawerState extends State<Admindrawer> {
           child: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  Color(0xFFE6F0FA), // Light pastel blue
-                  Color(0xFFFFFFFF), // White
-                ],
+                colors: [Color(0xFFE6F0FA), Color(0xFFFFFFFF)],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
@@ -140,7 +156,7 @@ class _AdmindrawerState extends State<Admindrawer> {
 
                   const SizedBox(height: 10),
 
-                  // ✅ Scrollable Drawer Items
+                  // Scrollable Drawer Items
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
@@ -193,6 +209,31 @@ class _AdmindrawerState extends State<Admindrawer> {
                             },
                           ),
                           _buildDrawerItem(
+                            icon: Icons.supervised_user_circle_outlined,
+                            label: "Business Recored",
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => AdminRecordedScreen(),
+                                ),
+                              );
+                            },
+                          ),
+
+                          _buildDrawerItem(
+                            icon: Icons.post_add_rounded,
+                            label: "user service Summary",
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => AdminSummaryPage(),
+                                ),
+                              );
+                            },
+                          ),
+                          _buildDrawerItem(
                             icon: Icons.feed_outlined,
                             label: "User Feedback",
                             onTap: () {
@@ -205,6 +246,7 @@ class _AdmindrawerState extends State<Admindrawer> {
                               );
                             },
                           ),
+
                           _buildDrawerItem(
                             icon: Icons.dashboard_customize,
                             label: "Salon post add",
@@ -230,13 +272,14 @@ class _AdmindrawerState extends State<Admindrawer> {
                             },
                           ),
                           _buildDrawerItem(
-                            icon: Icons.sign_language,
-                            label: "Cnic Admin Page",
+                            icon: Icons.post_add,
+                            label: "Saloon Confirmation",
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => AdminPanel(),
+                                  builder:
+                                      (context) => AdminAppointmentsScreen(),
                                 ),
                               );
                             },
@@ -249,43 +292,6 @@ class _AdmindrawerState extends State<Admindrawer> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => WorkerWallet(),
-                                ),
-                              );
-                            },
-                          ),
-                          _buildDrawerItem(
-                            icon: Icons.polymer_outlined,
-                            label: "Salon Appointment Details",
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) => AdminAppointmentsScreen(),
-                                ),
-                              );
-                            },
-                          ),
-                          _buildDrawerItem(
-                            icon: Icons.polymer_outlined,
-                            label: "Edit delete Plumbing services",
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => FatchAllplumber(),
-                                ),
-                              );
-                            },
-                          ),
-                          _buildDrawerItem(
-                            icon: Icons.polymer_outlined,
-                            label: "Edit delete Salons",
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => FatchAllSalon(),
                                 ),
                               );
                             },
@@ -317,7 +323,7 @@ class _AdmindrawerState extends State<Admindrawer> {
                     ),
                   ),
 
-                  // ✅ Logout at bottom (fixed)
+                  // Logout Button
                   _buildDrawerItem(
                     icon: Icons.logout,
                     label: "Logout",
